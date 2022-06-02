@@ -19,7 +19,7 @@ const getAllTasks = async (req, res) => {
                 console.error(e);
                 res.send("Error");
             });
-        conection.end()
+        db.end()
     } catch (err) {
         console.log(err);
     }
@@ -40,14 +40,16 @@ const getAllTasks = async (req, res) => {
 }
 
 const getTask = async (req, res) => {
-    let id = parseInt(req.params, 10) || 1;
+    let id = parseInt(req.params.id || 0, 10) || 0;
     db.query("Select * from task where id=$1", [
         id
     ])
         .then(result => {
-
-            //console.log(result) // ['brianc']
-            res.send({ task: result.rows[0] });
+            if(result.rows.length>0){
+                res.send({ task: result.rows[0] });
+            }else{
+                res.send("Elemento no encontrado");
+            }
         })
         .catch(e => {
             console.error(e.stack)
@@ -55,9 +57,7 @@ const getTask = async (req, res) => {
 }
 
 const createTask = (req, res) => {
-    //console.log("Req---->", req.body);
     const { title, description } = req.body;
-
     db.query("INSERT INTO task(title, description, active) VALUES($1 , $2, 1)", [
         title,
         description
@@ -75,7 +75,7 @@ const createTask = (req, res) => {
 }
 
 const updateTask = async (req, res) => {
-    let id = parseInt(req.params, 10) || 1;
+    let id = parseInt(req?.params.id || 0, 10);
     const { title, description } = req.body;
     console.log(id, title, description);
     db.query("UPDATE task SET title=$1, description=$2 WHERE id= $3", [
@@ -96,7 +96,7 @@ const updateTask = async (req, res) => {
 }
 
 const deleteTask = async (req, res) => {
-    let id = parseInt(req.params, 10) || 1;
+    let id = parseInt(req?.params.id || 0, 10);
     db.query("UPDATE task SET active = 0 WHERE id=$1", [
         id
     ], (err, result) => {
