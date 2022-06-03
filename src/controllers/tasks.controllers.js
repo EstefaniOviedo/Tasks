@@ -48,7 +48,7 @@ const getTask = async (req, res) => {
             if(result.rows.length>0){
                 res.send({ task: result.rows[0] });
             }else{
-                res.send("Elemento no encontrado");
+                res.send("Tarea no encontrada");
             }
         })
         .catch(e => {
@@ -106,7 +106,6 @@ const deleteTask = async (req, res) => {
         } else {
             console.log(result)
             res.send("Registro eliminado");
-            // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
         }
 
     });
