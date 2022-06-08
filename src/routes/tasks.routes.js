@@ -1,16 +1,37 @@
-const { Router } = require("express");
-const router = Router();
-const { getAllTasks, getTask,createTask,updateTask, deleteTask} = require("../controllers/tasks.controllers");
+const tasks = require("../controllers/task")();
+class router {
+    constructor(app = null) {
+        this.app = app;
+    }
 
-router.get("/tasks", getAllTasks);
+    configure() {
+        this.app.get("/tasks", (req, res) => {
+            tasks.getAllTasks(req, res);
+        });
 
-router.get("/tasks/:id", getTask);
+        this.app.get("/tasks/:id", (req, res) => {
+            tasks.getTask(req, res);
+        });
 
-router.post("/tasks", createTask);
+        this.app.post("/tasks", (req, res) => {
+            tasks.createTask(req, res);
+        });
 
-router.put("/tasks/:id", updateTask);
+        this.app.put("/tasks/:id", (req, res) => {
+            tasks.updateTask(req, res);
+        });
 
-router.delete("/tasks/:id", deleteTask);
+        this.app.delete("/tasks/:id", (req, res) => {
+            tasks.deleteTask(req, res);
+        });
+    }
+}
+
+module.exports = (app) => {
+    return new router(app);
+};
 
 
-module.exports = router;
+
+
+

@@ -1,0 +1,7 @@
+{
+	"appServer": {
+		"appAdrr": "http://192.168.50.212",
+		"appPort": 8000,
+		"wsPort": 8080
+	}
+}

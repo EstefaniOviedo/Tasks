@@ -12,6 +12,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<TaskList />}></Route>
             <Route path="/tasks/new" element={<TaskForm />}></Route>
+            <Route path="/tasks/:id/edit" element={<TaskForm />}></Route>
           </Routes>
         </Container>
 
