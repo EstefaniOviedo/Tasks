@@ -1,2 +1,2 @@
 # Tasks
-Crud de tareas se utiliza postgres y nodejs 
+Crud de tareas se utiliza react, postgres y nodejs
